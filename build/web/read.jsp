@@ -12,5 +12,9 @@
     <body>
         <h1>Hello World!</h1>
         <%= table %>
+        <br><br>
+        
+        <a href="add">Add loại sản phẩm</a>
+        
     </body>
 </html>

@@ -72,21 +72,28 @@ public class ReadQuery {
                 l.setMa_loai_cha(this.results.getInt("ma_loai_cha"));
                 
                 table += "<tr>";
-                table += "<td>";
-                table += l.getMa_loai();
-                table += "</td>";
                 
-                table += "<td>";
-                table += l.getTen_loai();
-                table += "</td>";
+                    table += "<td>";
+                    table += l.getMa_loai();
+                    table += "</td>";
+
+                    table += "<td>";
+                    table += l.getTen_loai();
+                    table += "</td>";
+
+                    table += "<td>";
+                    table += l.getMo_ta();
+                    table += "</td>";
+
+                    table += "<td>";
+                    table += l.getMa_loai_cha();
+                    table += "</td>";
+                    
+                    table += "<td>";
+                    table += "<a href=delete?ma_loai="+ l.getMa_loai() + "> Delete </a>";
+                    table += "</td>";
                 
-                table += "<td>";
-                table += l.getMo_ta();
-                table += "</td>";
                 
-                table += "<td>";
-                table += l.getMa_loai_cha();
-                table += "</td>";
                 table += "</tr>";
             }
         table += "</table>";
