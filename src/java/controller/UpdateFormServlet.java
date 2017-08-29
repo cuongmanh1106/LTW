@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dbHelpers.DeleteQuery;
 import dbHelpers.ReadQuery;
+import dbHelpers.ReadRecord;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -15,13 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.loai_san_pham;
 
 /**
  *
  * @author Thy
  */
-@WebServlet(name = "DeleteServlet", urlPatterns = {"/delete"})
-public class DeleteServlet extends HttpServlet {
+@WebServlet(name = "UpdateFormServlet", urlPatterns = {"/update"})
+public class UpdateFormServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +41,10 @@ public class DeleteServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteServlet</title>");            
+            out.println("<title>Servlet UpdateFormServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateFormServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,19 +78,26 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //get ma_loai 
+        //lay ma_loai
+        
         int ma_loai = Integer.parseInt(request.getParameter("ma_loai"));
         
-        //tao a deleteQuery object
+        //tao a ReadQuery class
         
-        ReadQuery dq = new ReadQuery();
-        //use deleteQuery to delete the object
+        ReadRecord rq = new ReadRecord(ma_loai);
         
-        dq.doDelete(ma_loai);
-        //pass execution on to the ReadServlet
-        String url = "/read";
-        RequestDispatcher dis = request.getRequestDispatcher(url);
-        dis.forward(request, response);
+        rq.doUpdate();
+        
+        
+        loai_san_pham l = rq.getLoai_san_pham();
+        
+        request.setAttribute("loai_san_pham", l);
+        
+        String url  = "/updateForm.jsp";
+       
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+        
         
     }
 

@@ -5,7 +5,6 @@
  */
 package controller;
 
-import dbHelpers.DeleteQuery;
 import dbHelpers.ReadQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Thy
  */
-@WebServlet(name = "DeleteServlet", urlPatterns = {"/delete"})
-public class DeleteServlet extends HttpServlet {
+@WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
+public class SearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class DeleteServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteServlet</title>");            
+            out.println("<title>Servlet SearchServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,8 +60,9 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //pass execution on to doPost
+       //pass execution on to doPost
         doPost(request,response);
+        
     }
 
     /**
@@ -76,21 +76,16 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //get ma_loai 
-        int ma_loai = Integer.parseInt(request.getParameter("ma_loai"));
-        
-        //tao a deleteQuery object
-        
-        ReadQuery dq = new ReadQuery();
-        //use deleteQuery to delete the object
-        
-        dq.doDelete(ma_loai);
-        //pass execution on to the ReadServlet
-        String url = "/read";
-        RequestDispatcher dis = request.getRequestDispatcher(url);
-        dis.forward(request, response);
-        
+        ReadQuery rq = new  ReadQuery();
+       //Get the HTML table from the ReadQuery object
+       rq.doRead();
+       String table = rq.getHTMLtable();
+       //pass execution control to read.jsp along with the table
+       request.setAttribute("table", table);
+       String url  = "/read.jsp";
+       
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
     }
 
     /**

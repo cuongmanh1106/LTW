@@ -6,6 +6,7 @@
 package controller;
 
 import dbHelpers.AddQuery;
+import dbHelpers.ReadQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -92,7 +93,7 @@ public class AddServlet extends HttpServlet {
         
         //set up an AddQuery object
         
-        AddQuery aq = new AddQuery();
+        ReadQuery aq = new ReadQuery();
         
         
         //pass the friend to addQuery to add to the database

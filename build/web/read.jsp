@@ -15,6 +15,7 @@
         <br><br>
         
         <a href="add">Add loại sản phẩm</a>
+        <a href="Search.jsp">Search Loai San Pham</a>
         
     </body>
 </html>

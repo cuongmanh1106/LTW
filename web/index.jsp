@@ -14,5 +14,6 @@
     <body>
         <h1>My customer database</h1>
         <a href="read">View all Friends</a>
+        <a href="Search.jsp">Search Loai San Pham</a>
     </body>
 </html>

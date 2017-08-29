@@ -5,7 +5,6 @@
  */
 package controller;
 
-import dbHelpers.DeleteQuery;
 import dbHelpers.ReadQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.loai_san_pham;
 
 /**
  *
  * @author Thy
  */
-@WebServlet(name = "DeleteServlet", urlPatterns = {"/delete"})
-public class DeleteServlet extends HttpServlet {
+@WebServlet(name = "UpdateServlet", urlPatterns = {"/UpdateSP"})
+public class UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class DeleteServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteServlet</title>");            
+            out.println("<title>Servlet UpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,21 +76,29 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //get data
         
-        //get ma_loai 
-        int ma_loai = Integer.parseInt(request.getParameter("ma_loai"));
+        String ten_loai = request.getParameter("ten_loai");
+        String mo_ta = request.getParameter("mo_ta");
+        int  ma_loai_cha = Integer.parseInt(request.getParameter("ma_loai_cha"));
+        int  ma_loai = Integer.parseInt(request.getParameter("ma_loai"));
         
-        //tao a deleteQuery object
+        //tao doi tuong loai_san_pham
+        loai_san_pham l = new loai_san_pham();
+        l.setTen_loai(ten_loai);
+        l.setMo_ta(mo_ta);
+        l.setMa_loai_cha(ma_loai_cha);
+        l.setMa_loai(ma_loai);
         
-        ReadQuery dq = new ReadQuery();
-        //use deleteQuery to delete the object
         
-        dq.doDelete(ma_loai);
-        //pass execution on to the ReadServlet
+        //tao doi tuong Readquery
+        ReadQuery rq = new ReadQuery();
+        
+        rq.doUpdate(l);
+        
         String url = "/read";
         RequestDispatcher dis = request.getRequestDispatcher(url);
         dis.forward(request, response);
-        
     }
 
     /**
